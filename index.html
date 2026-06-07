@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>InstaGrow | نمو إنستغرام</title>
+  <!-- Google Fonts + Font Awesome 6 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 10% 30%, #0a0c14, #030507);
+      color: #f1f5f9;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      transition: all 0.2s;
+    }
+
+    /* RTL specific overrides */
+    body[dir="rtl"] {
+      font-family: 'Inter', 'Segoe UI', 'Tahoma', system-ui, sans-serif;
+    }
+    body[dir="rtl"] .action-item, 
+    body[dir="rtl"] .checklist-item,
+    body[dir="rtl"] .tip-item {
+      flex-direction: row-reverse;
+    }
+    body[dir="rtl"] .action-item .gain-badge {
+      margin-right: auto;
+      margin-left: 0;
+    }
+    body[dir="rtl"] .tip-icon {
+      margin-left: 10px;
+      margin-right: 0;
+    }
+    body[dir="rtl"] h2 i, 
+    body[dir="rtl"] .logo i {
+      margin-left: 6px;
+      margin-right: 0;
+    }
+    body[dir="rtl"] .navbar .badge i {
+      margin-left: 6px;
+      margin-right: 0;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1e1e2f;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #f77737;
+      border-radius: 20px;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 1rem;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    body[dir="rtl"] .logo {
+      gap: 10px;
+    }
+    .logo i {
+      font-size: 2rem;
+      background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #f5b042, #f77737, #dd2a7b);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .lang-switch {
+      display: flex;
+      gap: 8px;
+      background: rgba(255,255,255,0.05);
+      padding: 5px 12px;
+      border-radius: 40px;
+      backdrop-filter: blur(4px);
+    }
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.85rem;
+    }
+    .lang-btn.active {
+      background: #f77737;
+      color: #0f0f1a;
+      box-shadow: 0 2px 8px rgba(247,119,55,0.3);
+    }
+    .badge {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .badge i {
+      margin-right: 6px;
+      color: #f77737;
+    }
+    body[dir="rtl"] .badge i {
+      margin-left: 6px;
+      margin-right: 0;
+    }
+
+    /* glass card */
+    .glass-card {
+      background: rgba(20, 25, 40, 0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 1.6rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
+    }
+    .glass-card:hover {
+      border-color: rgba(247, 119, 55, 0.4);
+      background: rgba(25, 30, 48, 0.7);
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      letter-spacing: -0.3px;
+    }
+    h2 i {
+      color: #f77737;
+      font-size: 1.5rem;
+    }
+    .grid-2col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .action-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.03);
+      padding: 0.8rem 1rem;
+      border-radius: 1.2rem;
+      margin-bottom: 0.8rem;
+      border: 1px solid transparent;
+    }
+    .action-item:hover {
+      border-color: rgba(247, 119, 55, 0.5);
+      background: rgba(247, 119, 55, 0.05);
+    }
+    .action-item input {
+      width: 20px;
+      height: 20px;
+      accent-color: #f77737;
+      cursor: pointer;
+    }
+    .action-label {
+      flex: 1;
+      font-weight: 500;
+    }
+    .gain-badge {
+      background: #1f2a3e;
+      padding: 4px 10px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fbc490;
+    }
+    .total-potential {
+      margin-top: 1.2rem;
+      background: linear-gradient(95deg, #f777371a, #dd2a7b1a);
+      border-radius: 1.5rem;
+      padding: 1rem;
+      text-align: center;
+    }
+    .total-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffb347, #ff6b4a);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      display: inline-block;
+      margin-left: 8px;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .checklist-item input {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    .progress-bar {
+      background: #2a2e42;
+      border-radius: 30px;
+      height: 10px;
+      width: 100%;
+      margin: 1rem 0;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, #f77737, #dd2a7b);
+      width: 0%;
+      height: 10px;
+      border-radius: 30px;
+      transition: width 0.25s ease;
+    }
+    .niche-select {
+      width: 100%;
+      padding: 12px 16px;
+      background: #0f111e;
+      border: 1px solid #334155;
+      border-radius: 40px;
+      color: white;
+      font-weight: 500;
+      margin-bottom: 1.2rem;
+      outline: none;
+      transition: 0.2s;
+    }
+    .hashtag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 1rem 0;
+    }
+    .hashtag {
+      background: rgba(247, 119, 55, 0.2);
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: 1px solid rgba(247, 119, 55, 0.4);
+    }
+    .copy-btn {
+      background: #1e293b;
+      border: none;
+      color: white;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+    }
+    .copy-btn:hover {
+      background: #f77737;
+      color: #0a0c14;
+    }
+    .tips-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .tip-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .tip-icon {
+      background: rgba(247, 119, 55, 0.2);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 2rem;
+      color: #94a3b8;
+    }
+    @media (max-width: 720px) {
+      .container { padding: 1.2rem; }
+      h2 { font-size: 1.3rem; }
+    }
+    .hero p { font-size: 1.1rem; opacity: 0.8; max-width: 700px; margin: 0.8rem auto 0; text-align: center; }
+    .hero { text-align: center; margin-bottom: 2.2rem; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="navbar">
+    <div class="logo">
+      <i class="fab fa-instagram"></i>
+      <h1 id="brandName">InstaGrow</h1>
+    </div>
+    <div class="lang-switch">
+      <button class="lang-btn active" data-lang="en">🇬🇧 EN</button>
+      <button class="lang-btn" data-lang="ar">🇸🇦 عربي</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h2 style="font-size: 2rem; justify-content: center;" id="heroTitle">🚀 turn engagement into <span style="color:#f77737;">real followers</span></h2>
+    <p id="heroSub">Data‑inspired strategies + interactive tools to boost your Instagram presence — 100% organic, no bots.</p>
+  </div>
+
+  <div class="grid-2col">
+    <div class="glass-card">
+      <h2><i class="fas fa-chart-simple"></i> <span id="growthTitle">Follower Growth Estimator</span></h2>
+      <p style="font-size: 0.85rem; margin-bottom: 1rem;" id="growthDesc">✔️ Select actions you'll commit weekly — see estimated new followers 🔽</p>
+      <div id="actionsContainer"></div>
+      <div class="total-potential">
+        <span id="totalLabel" style="font-weight: 600;">📈 estimated weekly growth:</span>
+        <span class="total-number" id="totalFollowersCount">0</span>
+        <span id="followersUnit"> new followers</span>
+        <div class="disclaimer-small" id="estDisclaimer">*estimates based on industry benchmarks & engagement rates</div>
+      </div>
+    </div>
+
+    <div class="glass-card">
+      <h2><i class="fas fa-check-circle"></i> <span id="checklistTitle">Daily Success Checklist</span></h2>
+      <p style="margin-bottom: 0.5rem;" id="checklistSub">Track your progress & stay consistent</p>
+      <div id="checklistContainer"></div>
+      <div class="progress-bar"><div class="progress-fill" id="checklistProgressFill"></div></div>
+      <div class="check-stats">
+        <span><i class="far fa-calendar-check"></i> <span id="completedCount">0</span>/<span id="totalTasks">0</span> <span id="tasksWord">tasks</span></span>
+        <span id="motivationMsg" style="font-weight: 500;">✨ keep going!</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2col">
+    <div class="glass-card">
+      <h2><i class="fas fa-hashtag"></i> <span id="hashtagTitle">Smart Hashtag Lab</span></h2>
+      <p style="font-size: 0.85rem; margin-bottom: 1rem;" id="hashtagDesc">Choose your niche & get high‑performing hashtags</p>
+      <select id="nicheSelect" class="niche-select"></select>
+      <div id="hashtagDisplay" class="hashtag-cloud"></div>
+      <button id="copyHashtagsBtn" class="copy-btn"><i class="far fa-copy"></i> <span id="copyBtnText">Copy all hashtags</span></button>
+      <div class="disclaimer-small" style="margin-top: 12px;" id="hashtagTip">✨ Use 5–10 relevant hashtags per post for reach</div>
+    </div>
+
+    <div class="glass-card">
+      <h2><i class="fas fa-lightbulb"></i> <span id="tipsTitle">Growth Accelerators</span></h2>
+      <div id="tipsListContainer" class="tips-list"></div>
+    </div>
+  </div>
+  <footer id="footerText"><i class="fab fa-instagram"></i> InstaGrow • Organic strategies only • Not affiliated with Instagram • Results vary based on effort & quality.</footer>
+</div>
+
+<script>
+  // ---------- TRANSLATIONS ----------
+  const translations = {
+    en: {
+      brand: "InstaGrow",
+      heroTitle: "🚀 turn engagement into <span style=\"color:#f77737;\">real followers</span>",
+      heroSub: "Data‑inspired strategies + interactive tools to boost your Instagram presence — 100% organic, no bots.",
+      growthTitle: "Follower Growth Estimator",
+      growthDesc: "✔️ Select actions you'll commit weekly — see estimated new followers 🔽",
+      totalLabel: "📈 estimated weekly growth:",
+      followersUnit: "new followers",
+      estDisclaimer: "*estimates based on industry benchmarks & engagement rates",
+      checklistTitle: "Daily Success Checklist",
+      checklistSub: "Track your progress & stay consistent",
+      tasksWord: "tasks",
+      hashtagTitle: "Smart Hashtag Lab",
+      hashtagDesc: "Choose your niche & get high‑performing hashtags",
+      copyBtnText: "Copy all hashtags",
+      hashtagTip: "✨ Use 5–10 relevant hashtags per post for reach",
+      tipsTitle: "Growth Accelerators",
+      footer: "InstaGrow • Organic strategies only • Not affiliated with Instagram • Results vary based on effort & quality.",
+      nicheOptions: {
+        fitness: "💪 Fitness & Gym",
+        travel: "✈️ Travel & Adventure",
+        beauty: "💄 Beauty & Skincare",
+        tech: "📱 Tech & Gadgets",
+        food: "🍕 Food & Cooking",
+        art: "🎨 Art & Illustration"
+      },
+      growthActions: [
+        { id: "reels", label: "📱 Post 3–4 Reels per week", gain: 55 },
+        { id: "feed", label: "🖼️ Share 5 high‑quality feed posts", gain: 38 },
+        { id: "engage", label: "💬 Engage 30 min/day (comments & DMs)", gain: 45 },
+        { id: "collab", label: "🤝 Collaborate with 1 creator / week", gain: 70 },
+        { id: "hashtag", label: "🏷️ Use optimized hashtag sets", gain: 28 },
+        { id: "stories", label: "📖 Post interactive stories daily", gain: 22 },
+        { id: "carousel", label: "🔄 Post 2 carousel posts (high save-rate)", gain: 32 }
+      ],
+      dailyTasks: [
+        "🎥 Publish 1 Reel (short, trendy audio)",
+        "❤️ Engage with 15+ followers & non-followers in your niche",
+        "📸 Post 1 feed photo or carousel (value-driven)",
+        "📊 Check Instagram insights & adapt next content",
+        "💬 Reply to every story mention & 5 DMs"
+      ],
+      tipsList: [
+        { icon: "fas fa-video", title: "Reels supremacy", text: "Short, engaging Reels get 2x more reach → convert viewers to followers." },
+        { icon: "fas fa-clock", title: "Post when active", text: "Analyze insights; post 1h before peak activity. 7–9pm works for most." },
+        { icon: "fas fa-comments", title: "Community first", text: "Reply to every comment + DM within 24h → boosts loyalty & algorithm love." },
+        { icon: "fas fa-chart-line", title: "Content pillar mix", text: "Educational, entertaining & relatable posts hook wider audiences." }
+      ]
+    },
+    ar: {
+      brand: "إنستا Grow",
+      heroTitle: "🚀 حوّل التفاعل إلى <span style=\"color:#f77737;\">متابعين حقيقيين</span>",
+      heroSub: "استراتيجيات مستوحاة من البيانات + أدوات تفاعلية لتعزيز حضورك على إنستغرام — ١٠٠٪ عضوي، بدون بوتات.",
+      growthTitle: "مقدّر نمو المتابعين",
+      growthDesc: "✔️ اختر الإجراءات التي ستلتزم بها أسبوعيًا — شاهد تقدير المتابعين الجدد 🔽",
+      totalLabel: "📈 النمو الأسبوعي المتوقع:",
+      followersUnit: "متابع جديد",
+      estDisclaimer: "*تقديرات تستند إلى معايير الصناعة ومعدلات التفاعل",
+      checklistTitle: "قائمة النجاح اليومية",
+      checklistSub: "تتبع تقدّمك وحافظ على الاستمرارية",
+      tasksWord: "مهمة",
+      hashtagTitle: "مختبر الهاشتاغات الذكي",
+      hashtagDesc: "اختر مجالك واحصل على هاشتاغات عالية الأداء",
+      copyBtnText: "نسخ كل الهاشتاغات",
+      hashtagTip: "✨ استخدم ٥–١٠ هاشتاغات مناسبة لكل منشور للوصول",
+      tipsTitle: "مسرّعات النمو",
+      footer: "إنستا Grow • استراتيجيات عضوية فقط • غير تابع لإنستغرام • النتائج تعتمد على الجهد والجودة.",
+      nicheOptions: {
+        fitness: "💪 لياقة وصالات رياضية",
+        travel: "✈️ سفر ومغامرات",
+        beauty: "💄 جمال وعناية بالبشرة",
+        tech: "📱 تقنية وأدوات ذكية",
+        food: "🍕 طعام وطبخ",
+        art: "🎨 فن ورسم"
+      },
+      growthActions: [
+        { id: "reels", label: "📱 نشر ٣-٤ ريلز أسبوعيًا", gain: 55 },
+        { id: "feed", label: "🖼️ مشاركة ٥ منشورات عالية الجودة", gain: 38 },
+        { id: "engage", label: "💬 تفاعل ٣٠ دقيقة/يوم (تعليقات ورسائل)", gain: 45 },
+        { id: "collab", label: "🤝 تعاون مع صانع محتوى واحد أسبوعيًا", gain: 70 },
+        { id: "hashtag", label: "🏷️ استخدم مجموعات هاشتاغ محسّنة", gain: 28 },
+        { id: "stories", label: "📖 انشر ستوريات تفاعلية يوميًا", gain: 22 },
+        { id: "carousel", label: "🔄 انشر منشورين كاروسيل (نسبة حفظ عالية)", gain: 32 }
+      ],
+      dailyTasks: [
+        "🎥 انشر ريلز واحد (صوت قصير وعصري)",
+        "❤️ تفاعل مع ١٥+ من المتابعين وغير المتابعين في مجالك",
+        "📸 انشر صورة أو كاروسيل (محتوى ذو قيمة)",
+        "📊 تفقّد إحصائيات إنستغرام وعدّل محتواك التالي",
+        "💬 رد على كل إشارة في الستوري و ٥ رسائل خاصة"
+      ],
+      tipsList: [
+        { icon: "fas fa-video", title: "سيادة الريلز", text: "الريلز القصيرة والجذابة تحصل على وصول مضاعف → حوّل المشاهدين إلى متابعين." },
+        { icon: "fas fa-clock", title: "النشر في وقت النشاط", text: "حلل الإحصائيات وانشر قبل ساعة من ذروة النشاط. الساعة ٧-٩ مساءً مناسبة للأغلبية." },
+        { icon: "fas fa-comments", title: "المجتمع أولاً", text: "رد على كل تعليق ورسالة خلال ٢٤ ساعة → يعزز الولاء وإشارات الخوارزمية." },
+        { icon: "fas fa-chart-line", title: "مزيج الركائز المحتوى", text: "المحتوى التعليمي والترفيهي والمرتبط بالحياة اليومية يجذب جمهورًا أوسع." }
+      ]
+    }
+  };
+
+  let currentLang = 'en';
+
+  // Base data (will be overwritten by language)
+  let growthActionsList = [];
+  let dailyTasksList = [];
+  let tipsStructure = [];
+  let nicheOptionsMap = {};
+
+  const hashtagsDatabase = {
+    fitness: ["#fitnessmotivation", "#gymlife", "#workoutdaily", "#fitfam", "#bodybuilding", "#homeworkout", "#strongnotskinny", "#trainingday"],
+    travel: ["#wanderlust", "#travelgram", "#adventuretime", "#exploremore", "#naturelovers", "#roamtheplanet", "#beautifuldestinations", "#travellife"],
+    beauty: ["#skincareroutine", "#makeupinspo", "#glowup", "#beautytips", "#crueltyfree", "#selfcaredaily", "#cleanbeauty", "#lipsticklover"],
+    tech: ["#technews", "#gadgetlove", "#innovation", "#futuretech", "#codinglife", "#aiart", "#smartgadgets", "#techie"],
+    food: ["#foodielife", "#instayum", "#deliciousfood", "#homemadefood", "#foodgasm", "#easyrecipes", "#streetfood", "#healthyeating"],
+    art: ["#artdaily", "#illustrationnow", "#creativeprocess", "#artistsoninstagram", "#sketchbook", "#digitalart", "#watercolor", "#abstractart"]
+  };
+
+  function loadLanguageData(lang) {
+    const t = translations[lang];
+    growthActionsList = t.growthActions.map(a => ({ ...a, label: a.label, gain: a.gain }));
+    dailyTasksList = t.dailyTasks.map(task => ({ text: task, completed: false }));
+    tipsStructure = t.tipsList;
+    nicheOptionsMap = t.nicheOptions;
+    // update static texts
+    document.getElementById("brandName").innerHTML = t.brand;
+    document.getElementById("heroTitle").innerHTML = t.heroTitle;
+    document.getElementById("heroSub").innerText = t.heroSub;
+    document.getElementById("growthTitle").innerText = t.growthTitle;
+    document.getElementById("growthDesc").innerText = t.growthDesc;
+    document.getElementById("totalLabel").innerHTML = t.totalLabel;
+    document.getElementById("followersUnit").innerText = t.followersUnit;
+    document.getElementById("estDisclaimer").innerText = t.estDisclaimer;
+    document.getElementById("checklistTitle").innerText = t.checklistTitle;
+    document.getElementById("checklistSub").innerText = t.checklistSub;
+    document.getElementById("tasksWord").innerText = t.tasksWord;
+    document.getElementById("hashtagTitle").innerText = t.hashtagTitle;
+    document.getElementById("hashtagDesc").innerText = t.hashtagDesc;
+    document.getElementById("copyBtnText").innerText = t.copyBtnText;
+    document.getElementById("hashtagTip").innerText = t.hashtagTip;
+    document.getElementById("tipsTitle").innerText = t.tipsTitle;
+    document.getElementById("footerText").innerHTML = t.footer;
+  }
+
+  function rebuildNicheDropdown() {
+    const select = document.getElementById("nicheSelect");
+    if(!select) return;
+    select.innerHTML = "";
+    for (const [key, label] of Object.entries(nicheOptionsMap)) {
+      const option = document.createElement("option");
+      option.value = key;
+      option.textContent = label;
+      select.appendChild(option);
+    }
+  }
+
+  function renderGrowthCalculator() {
+    const container = document.getElementById("actionsContainer");
+    if(!container) return;
+    container.innerHTML = "";
+    growthActionsList.forEach((action, idx) => {
+      const div = document.createElement("div");
+      div.className = "action-item";
+      const isChecked = (localStorage.getItem(`action_${action.id}`) === 'true') || (action.id === 'engage' && currentLang === 'en' && !localStorage.getItem(`action_${action.id}`) ) || (action.id === 'engage' && currentLang === 'ar' && !localStorage.getItem(`action_${action.id}`));
+      const checkedAttr = isChecked ? 'checked' : '';
+      div.innerHTML = `
+        <input type="checkbox" id="chk_${action.id}" data-gain="${action.gain}" ${checkedAttr}>
+        <span class="action-label">${action.label}</span>
+        <span class="gain-badge">+${action.gain}/wk</span>
+      `;
+      container.appendChild(div);
+    });
+    document.querySelectorAll("#actionsContainer input[type=checkbox]").forEach(cb => {
+      cb.addEventListener("change", (e) => {
+        const id = cb.id.replace("chk_", "");
+        localStorage.setItem(`action_${id}`, cb.checked);
+        updateTotalGrowth();
+      });
+    });
+    updateTotalGrowth();
+  }
+
+  function updateTotalGrowth() {
+    let totalGain = 20; // baseline
+    document.querySelectorAll("#actionsContainer input[type=checkbox]:checked").forEach(cb => {
+      const gain = parseInt(cb.getAttribute("data-gain"));
+      if(!isNaN(gain)) totalGain += gain;
+    });
+    document.getElementById("totalFollowersCount").innerText = totalGain;
+  }
+
+  function renderChecklist() {
+    const container = document.getElementById("checklistContainer");
+    if(!container) return;
+    container.innerHTML = "";
+    dailyTasksList.forEach((task, idx) => {
+      const div = document.createElement("div");
+      div.className = "checklist-item";
+      div.innerHTML = `
+        <input type="checkbox" data-taskidx="${idx}" ${task.completed ? 'checked' : ''}>
+        <span style="flex:1;">${task.text}</span>
+      `;
+      container.appendChild(div);
+    });
+    document.querySelectorAll("#checklistContainer input[type=checkbox]").forEach(cb => {
+      cb.addEventListener("change", (e) => {
+        const idx = parseInt(cb.getAttribute("data-taskidx"));
+        if(!isNaN(idx)) {
+          dailyTasksList[idx].completed = cb.checked;
+          updateChecklistProgress();
+          saveChecklistState();
+        }
+      });
+    });
+    updateChecklistProgress();
+  }
+
+  function updateChecklistProgress() {
+    const total = dailyTasksList.length;
+    const completed = dailyTasksList.filter(t => t.completed).length;
+    const percent = (completed / total) * 100;
+    const fill = document.getElementById("checklistProgressFill");
+    if(fill) fill.style.width = `${percent}%`;
+    document.getElementById("completedCount").innerText = completed;
+    document.getElementById("totalTasks").innerText = total;
+    const msgMap = { en: ["✨ keep going!", "🌟 Good rhythm!", "🔥 Perfect consistency!"], ar: ["✨ استمر!", "🌟 إيقاع جيد!", "🔥 اتساق مثالي!"] };
+    const msgs = msgMap[currentLang];
+    let msg = msgs[0];
+    if(completed === total) msg = msgs[2];
+    else if(completed >= 3) msg = msgs[1];
+    document.getElementById("motivationMsg").innerText = msg;
+  }
+
+  function saveChecklistState() {
+    const state = dailyTasksList.map(t => t.completed);
+    localStorage.setItem("instagrow_checklist", JSON.stringify(state));
+  }
+
+  function loadChecklistState() {
+    const saved = localStorage.getItem("instagrow_checklist");
+    if(saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if(Array.isArray(parsed) && parsed.length === dailyTasksList.length) {
+          dailyTasksList.forEach((task, idx) => task.completed = parsed[idx]);
+        }
+      } catch(e) {}
+    }
+  }
+
+  function renderTips() {
+    const container = document.getElementById("tipsListContainer");
+    if(!container) return;
+    container.innerHTML = "";
+    tipsStructure.forEach(tip => {
+      const div = document.createElement("div");
+      div.className = "tip-item";
+      div.innerHTML = `
+        <div class="tip-icon"><i class="${tip.icon}"></i></div>
+        <div class="tip-text"><strong>${tip.title}</strong><p>${tip.text}</p></div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  function renderHashtagsForNiche(niche) {
+    const tags = hashtagsDatabase[niche] || hashtagsDatabase.fitness;
+    const container = document.getElementById("hashtagDisplay");
+    if(container) {
+      container.innerHTML = "";
+      tags.forEach(tag => {
+        const span = document.createElement("span");
+        span.className = "hashtag";
+        span.innerText = tag;
+        container.appendChild(span);
+      });
+    }
+  }
+
+  function getAllCurrentHashtags() {
+    const select = document.getElementById("nicheSelect");
+    const niche = select ? select.value : "fitness";
+    return hashtagsDatabase[niche] || hashtagsDatabase.fitness;
+  }
+
+  async function copyHashtags() {
+    const tags = getAllCurrentHashtags();
+    const text = tags.join(" ");
+    await navigator.clipboard.writeText(text);
+    const btn = document.getElementById("copyHashtagsBtn");
+    const original = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-check"></i> ' + (currentLang === 'ar' ? 'تم النسخ!' : 'Copied!');
+    setTimeout(() => btn.innerHTML = original, 1500);
+  }
+
+  function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang === 'ar' ? 'ar' : 'en';
+    document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    localStorage.setItem("insta_lang", lang);
+    // update active button
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+      if(btn.getAttribute("data-lang") === lang) btn.classList.add("active");
+      else btn.classList.remove("active");
+    });
+    loadLanguageData(lang);
+    rebuildNicheDropdown();
+    // reinitialize data structures with new language
+    loadLanguageData(lang);
+    // important: rebuild dailyTasksList fresh from translations, keeping completed state? we preserve but map carefully.
+    const oldCompleted = dailyTasksList.map(t => t.completed);
+    const newTasks = translations[lang].dailyTasks.map((text, idx) => ({ text, completed: oldCompleted[idx] || false }));
+    dailyTasksList.length = 0;
+    dailyTasksList.push(...newTasks);
+    // growth actions
+    const newActions = translations[lang].growthActions.map(a => ({ ...a }));
+    growthActionsList.length = 0;
+    growthActionsList.push(...newActions);
+    tipsStructure = translations[lang].tipsList;
+    nicheOptionsMap = translations[lang].nicheOptions;
+    // re-render all dynamic components
+    renderGrowthCalculator();
+    renderChecklist();
+    renderTips();
+    const currentNiche = document.getElementById("nicheSelect")?.value || "fitness";
+    renderHashtagsForNiche(currentNiche);
+    document.getElementById("nicheSelect").addEventListener("change", (e) => renderHashtagsForNiche(e.target.value));
+    document.getElementById("copyHashtagsBtn").onclick = copyHashtags;
+    updateTotalGrowth();
+  }
+
+  function init() {
+    const savedLang = localStorage.getItem("insta_lang");
+    const preferred = (savedLang === 'ar' || savedLang === 'en') ? savedLang : 'en';
+    // initial data
+    loadLanguageData(preferred);
+    rebuildNicheDropdown();
+    growthActionsList = translations[preferred].growthActions.map(a => ({ ...a }));
+    dailyTasksList = translations[preferred].dailyTasks.map(text => ({ text, completed: false }));
+    tipsStructure = translations[preferred].tipsList;
+    nicheOptionsMap = translations[preferred].nicheOptions;
+    loadChecklistState();
+    renderGrowthCalculator();
+    renderChecklist();
+    renderTips();
+    const nicheSelect = document.getElementById("nicheSelect");
+    if(nicheSelect) {
+      renderHashtagsForNiche(nicheSelect.value);
+      nicheSelect.addEventListener("change", (e) => renderHashtagsForNiche(e.target.value));
+    }
+    document.getElementById("copyHashtagsBtn").onclick = copyHashtags;
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+      btn.addEventListener("click", () => setLanguage(btn.getAttribute("data-lang")));
+    });
+    setLanguage(preferred); // final sync
+  }
+  init();
+</script>
+</body>
+</html>
