@@ -1,759 +1,442 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>InstaGrow | نمو إنستغرام</title>
-  <!-- Google Fonts + Font Awesome 6 -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <title>مagnet متابعين حقيقيين | InstaMagnet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at 10% 30%, #0a0c14, #030507);
-      color: #f1f5f9;
+      font-family: 'Cairo', 'Inter', sans-serif;
+      background: linear-gradient(145deg, #0b0e1a 0%, #010101 100%);
+      color: #f0f3fa;
       line-height: 1.5;
-      scroll-behavior: smooth;
-      transition: all 0.2s;
     }
-
-    /* RTL specific overrides */
-    body[dir="rtl"] {
-      font-family: 'Inter', 'Segoe UI', 'Tahoma', system-ui, sans-serif;
+    body[dir="ltr"] { font-family: 'Inter', 'Cairo', sans-serif; }
+    .container { max-width: 1300px; margin: 0 auto; padding: 1.8rem 1.5rem; }
+    
+    /* glassmorphism */
+    .glass {
+      background: rgba(12, 18, 28, 0.7);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      border: 1px solid rgba(247, 119, 55, 0.25);
+      padding: 1.6rem;
+      transition: 0.2s;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
     }
-    body[dir="rtl"] .action-item, 
-    body[dir="rtl"] .checklist-item,
-    body[dir="rtl"] .tip-item {
-      flex-direction: row-reverse;
-    }
-    body[dir="rtl"] .action-item .gain-badge {
-      margin-right: auto;
-      margin-left: 0;
-    }
-    body[dir="rtl"] .tip-icon {
-      margin-left: 10px;
-      margin-right: 0;
-    }
-    body[dir="rtl"] h2 i, 
-    body[dir="rtl"] .logo i {
-      margin-left: 6px;
-      margin-right: 0;
-    }
-    body[dir="rtl"] .navbar .badge i {
-      margin-left: 6px;
-      margin-right: 0;
-    }
-
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #1e1e2f;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #f77737;
-      border-radius: 20px;
-    }
-
-    .container {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
-    }
-
-    /* navbar */
+    .glass:hover { border-color: #f77737; background: rgba(20, 28, 40, 0.8); }
+    
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-bottom: 2.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      padding-bottom: 1rem;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    body[dir="rtl"] .logo {
-      gap: 10px;
-    }
-    .logo i {
-      font-size: 2rem;
-      background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-    .logo h1 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #f5b042, #f77737, #dd2a7b);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      letter-spacing: -0.5px;
-    }
-    .lang-switch {
-      display: flex;
-      gap: 8px;
-      background: rgba(255,255,255,0.05);
-      padding: 5px 12px;
-      border-radius: 40px;
-      backdrop-filter: blur(4px);
-    }
-    .lang-btn {
-      background: transparent;
-      border: none;
-      color: #cbd5e1;
-      font-weight: 600;
-      padding: 6px 12px;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-size: 0.85rem;
-    }
-    .lang-btn.active {
-      background: #f77737;
-      color: #0f0f1a;
-      box-shadow: 0 2px 8px rgba(247,119,55,0.3);
-    }
-    .badge {
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(4px);
-      padding: 0.4rem 1rem;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-    .badge i {
-      margin-right: 6px;
-      color: #f77737;
-    }
-    body[dir="rtl"] .badge i {
-      margin-left: 6px;
-      margin-right: 0;
-    }
-
-    /* glass card */
-    .glass-card {
-      background: rgba(20, 25, 40, 0.65);
-      backdrop-filter: blur(12px);
-      border-radius: 2rem;
-      border: 1px solid rgba(255,255,255,0.1);
-      padding: 1.6rem;
-      transition: all 0.2s ease;
-      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
-    }
-    .glass-card:hover {
-      border-color: rgba(247, 119, 55, 0.4);
-      background: rgba(25, 30, 48, 0.7);
-    }
-
-    h2 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      letter-spacing: -0.3px;
-    }
-    h2 i {
-      color: #f77737;
-      font-size: 1.5rem;
-    }
-    .grid-2col {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 1.8rem;
       margin-bottom: 2rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-
-    .action-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(255,255,255,0.03);
-      padding: 0.8rem 1rem;
-      border-radius: 1.2rem;
-      margin-bottom: 0.8rem;
-      border: 1px solid transparent;
-    }
-    .action-item:hover {
-      border-color: rgba(247, 119, 55, 0.5);
-      background: rgba(247, 119, 55, 0.05);
-    }
-    .action-item input {
-      width: 20px;
-      height: 20px;
-      accent-color: #f77737;
-      cursor: pointer;
-    }
-    .action-label {
-      flex: 1;
-      font-weight: 500;
-    }
-    .gain-badge {
-      background: #1f2a3e;
-      padding: 4px 10px;
-      border-radius: 40px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #fbc490;
-    }
-    .total-potential {
-      margin-top: 1.2rem;
-      background: linear-gradient(95deg, #f777371a, #dd2a7b1a);
-      border-radius: 1.5rem;
-      padding: 1rem;
-      text-align: center;
-    }
-    .total-number {
-      font-size: 2.2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #ffb347, #ff6b4a);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      display: inline-block;
-      margin-left: 8px;
-    }
-    .checklist-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 0.7rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .checklist-item input {
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-    }
-    .progress-bar {
-      background: #2a2e42;
-      border-radius: 30px;
-      height: 10px;
-      width: 100%;
-      margin: 1rem 0;
-    }
-    .progress-fill {
-      background: linear-gradient(90deg, #f77737, #dd2a7b);
-      width: 0%;
-      height: 10px;
-      border-radius: 30px;
-      transition: width 0.25s ease;
-    }
-    .niche-select {
-      width: 100%;
-      padding: 12px 16px;
-      background: #0f111e;
-      border: 1px solid #334155;
-      border-radius: 40px;
-      color: white;
-      font-weight: 500;
-      margin-bottom: 1.2rem;
-      outline: none;
-      transition: 0.2s;
-    }
-    .hashtag-cloud {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 1rem 0;
-    }
-    .hashtag {
-      background: rgba(247, 119, 55, 0.2);
-      padding: 6px 14px;
-      border-radius: 40px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      border: 1px solid rgba(247, 119, 55, 0.4);
-    }
-    .copy-btn {
-      background: #1e293b;
-      border: none;
-      color: white;
-      padding: 8px 18px;
-      border-radius: 40px;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: 0.2s;
-    }
-    .copy-btn:hover {
-      background: #f77737;
-      color: #0a0c14;
-    }
-    .tips-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .tip-item {
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-    }
-    .tip-icon {
-      background: rgba(247, 119, 55, 0.2);
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-    footer {
-      margin-top: 2rem;
-      text-align: center;
-      font-size: 0.75rem;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      padding-top: 2rem;
-      color: #94a3b8;
-    }
-    @media (max-width: 720px) {
-      .container { padding: 1.2rem; }
-      h2 { font-size: 1.3rem; }
-    }
-    .hero p { font-size: 1.1rem; opacity: 0.8; max-width: 700px; margin: 0.8rem auto 0; text-align: center; }
-    .hero { text-align: center; margin-bottom: 2.2rem; }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo i { font-size: 2rem; background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7); background-clip: text; -webkit-background-clip: text; color: transparent; }
+    .logo h1 { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, #f5b042, #f77737); background-clip: text; -webkit-background-clip: text; color: transparent; }
+    .lang-switch { display: flex; gap: 8px; background: #1e1f2c; padding: 5px 10px; border-radius: 60px; }
+    .lang-btn { background: transparent; border: none; color: #cbd5e1; font-weight: 600; padding: 5px 14px; border-radius: 40px; cursor: pointer; }
+    .lang-btn.active { background: #f77737; color: #0a0c14; }
+    
+    h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+    h2 i { color: #f77737; }
+    .grid-2col { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 1.8rem; margin-bottom: 2rem; }
+    
+    /* action cards */
+    .action-card { background: rgba(0,0,0,0.3); border-radius: 1.2rem; padding: 1rem; margin-bottom: 1rem; border-right: 3px solid #f77737; }
+    .engagement-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+    .engagement-item input, .engagement-item textarea { background: #0f111e; border: 1px solid #2d3748; border-radius: 40px; padding: 8px 15px; color: white; flex: 1; }
+    .btn-grow { background: #f77737; border: none; color: #0a0c14; font-weight: bold; padding: 10px 20px; border-radius: 40px; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-grow:hover { background: #ff904f; transform: scale(0.97); }
+    .progress-bar { background: #262c3a; border-radius: 30px; height: 10px; margin: 1rem 0; }
+    .progress-fill { background: linear-gradient(90deg, #f77737, #dd2a7b); width: 0%; height: 10px; border-radius: 30px; }
+    .hashtag-cloud { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
+    .hashtag { background: rgba(247, 119, 55, 0.2); padding: 6px 14px; border-radius: 40px; font-size: 0.8rem; border: 1px solid #f7773766; }
+    .tip-item { display: flex; gap: 12px; margin-bottom: 1rem; align-items: flex-start; }
+    .tip-icon { background: #f7773720; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    footer { text-align: center; margin-top: 2rem; font-size: 0.7rem; opacity: 0.7; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; }
+    @media (max-width: 700px) { .container { padding: 1rem; } }
+    .badge-success { background: #1f8a4c20; border-radius: 40px; padding: 4px 12px; font-size: 0.7rem; display: inline-block; margin-top: 8px; }
   </style>
 </head>
 <body>
 <div class="container">
   <div class="navbar">
-    <div class="logo">
-      <i class="fab fa-instagram"></i>
-      <h1 id="brandName">InstaGrow</h1>
-    </div>
-    <div class="lang-switch">
-      <button class="lang-btn active" data-lang="en">🇬🇧 EN</button>
-      <button class="lang-btn" data-lang="ar">🇸🇦 عربي</button>
-    </div>
+    <div class="logo"><i class="fab fa-instagram"></i><h1>InstaMagnet</h1></div>
+    <div class="lang-switch"><button class="lang-btn active" data-lang="ar">🇸🇦 عربي</button><button class="lang-btn" data-lang="en">🇬🇧 EN</button></div>
   </div>
-
-  <div class="hero">
-    <h2 style="font-size: 2rem; justify-content: center;" id="heroTitle">🚀 turn engagement into <span style="color:#f77737;">real followers</span></h2>
-    <p id="heroSub">Data‑inspired strategies + interactive tools to boost your Instagram presence — 100% organic, no bots.</p>
+  
+  <div class="glass" style="text-align: center; margin-bottom: 2rem;">
+    <h2 id="mainTagline" style="justify-content: center;">🧲 <span>اجذب متابعين حقيقيين يومياً</span></h2>
+    <p id="mainDesc">ليس مجرد نصائح – أدوات تفاعلية تترجم أفعالك إلى متابعين مهتمين بمحتواك.</p>
+    <div class="badge-success" id="realPromise">✅ مضمون 100% عضوي – بدون بوتات أو حسابات وهمية</div>
   </div>
-
+  
   <div class="grid-2col">
-    <div class="glass-card">
-      <h2><i class="fas fa-chart-simple"></i> <span id="growthTitle">Follower Growth Estimator</span></h2>
-      <p style="font-size: 0.85rem; margin-bottom: 1rem;" id="growthDesc">✔️ Select actions you'll commit weekly — see estimated new followers 🔽</p>
-      <div id="actionsContainer"></div>
-      <div class="total-potential">
-        <span id="totalLabel" style="font-weight: 600;">📈 estimated weekly growth:</span>
-        <span class="total-number" id="totalFollowersCount">0</span>
-        <span id="followersUnit"> new followers</span>
-        <div class="disclaimer-small" id="estDisclaimer">*estimates based on industry benchmarks & engagement rates</div>
-      </div>
+    <!-- عمود المهام اليومية الحقيقية -->
+    <div class="glass">
+      <h2><i class="fas fa-tasks"></i> <span id="dailyTitle">مهام تجلب متابعين حقيقيين</span></h2>
+      <div id="realTasksList"></div>
+      <div class="progress-bar"><div class="progress-fill" id="dailyProgressFill"></div></div>
+      <div id="dailyStats" style="display: flex; justify-content: space-between;"><span>✔️ <span id="doneCount">0</span>/<span id="totalCount">0</span></span> <span id="dailyMsg">✨ ابدأ الآن</span></div>
     </div>
-
-    <div class="glass-card">
-      <h2><i class="fas fa-check-circle"></i> <span id="checklistTitle">Daily Success Checklist</span></h2>
-      <p style="margin-bottom: 0.5rem;" id="checklistSub">Track your progress & stay consistent</p>
-      <div id="checklistContainer"></div>
-      <div class="progress-bar"><div class="progress-fill" id="checklistProgressFill"></div></div>
-      <div class="check-stats">
-        <span><i class="far fa-calendar-check"></i> <span id="completedCount">0</span>/<span id="totalTasks">0</span> <span id="tasksWord">tasks</span></span>
-        <span id="motivationMsg" style="font-weight: 500;">✨ keep going!</span>
+    
+    <!-- عمود مولد التفاعل المباشر -->
+    <div class="glass">
+      <h2><i class="fas fa-comment-dots"></i> <span id="engageTitle">تعليقات تجذب المتابعين</span></h2>
+      <p id="engageDesc" style="font-size: 0.85rem; margin-bottom: 10px;">انسخ نص تعليق ذكي وضعه على منشورات حسابات في مجالك</p>
+      <textarea id="commentSuggestion" rows="2" style="width:100%; background:#0a0c16; border:1px solid #f77737; border-radius: 24px; padding: 12px; color:white; margin-bottom: 12px;" readonly></textarea>
+      <button id="copyCommentBtn" class="btn-grow"><i class="far fa-copy"></i> <span id="copyBtnText">انسخ التعليق</span></button>
+      <button id="newCommentBtn" class="btn-grow" style="background: #2d3748; margin-top: 8px;"><i class="fas fa-sync-alt"></i> <span id="newCommentText">تعليق جديد</span></button>
+      <div style="margin-top: 1rem; background: #00000040; border-radius: 1rem; padding: 12px;">
+        <i class="fas fa-chart-line"></i> <span id="realFollowersTip">💡 كل تعليك حقيقي يزيد ظهورك → متابعين فعليين</span>
       </div>
     </div>
   </div>
-
+  
   <div class="grid-2col">
-    <div class="glass-card">
-      <h2><i class="fas fa-hashtag"></i> <span id="hashtagTitle">Smart Hashtag Lab</span></h2>
-      <p style="font-size: 0.85rem; margin-bottom: 1rem;" id="hashtagDesc">Choose your niche & get high‑performing hashtags</p>
-      <select id="nicheSelect" class="niche-select"></select>
-      <div id="hashtagDisplay" class="hashtag-cloud"></div>
-      <button id="copyHashtagsBtn" class="copy-btn"><i class="far fa-copy"></i> <span id="copyBtnText">Copy all hashtags</span></button>
-      <div class="disclaimer-small" style="margin-top: 12px;" id="hashtagTip">✨ Use 5–10 relevant hashtags per post for reach</div>
+    <!-- مولد هاشتاغات ذكي + اقتراح محتوى -->
+    <div class="glass">
+      <h2><i class="fas fa-hashtag"></i> <span id="hashTitle">هاشتاغات تجيب مشاهديين</span></h2>
+      <select id="nicheSelect" class="btn-grow" style="background:#11161f; color:white; width:100%; margin-bottom: 1rem;"></select>
+      <div id="hashtagArea" class="hashtag-cloud"></div>
+      <button id="copyHashtagsBtn" class="btn-grow" style="background:#2d3748;"><i class="far fa-copy"></i> <span id="copyHashText">نسخ الهاشتاغات</span></button>
     </div>
-
-    <div class="glass-card">
-      <h2><i class="fas fa-lightbulb"></i> <span id="tipsTitle">Growth Accelerators</span></h2>
-      <div id="tipsListContainer" class="tips-list"></div>
+    
+    <!-- مؤشر النمو الأسبوعي بناءً على الالتزام -->
+    <div class="glass">
+      <h2><i class="fas fa-chart-simple"></i> <span id="growthTitle">تقدير المتابعين الواقعيين</span></h2>
+      <div id="commitActions"></div>
+      <div style="background: linear-gradient(95deg, #f7773720, #dd2a7b20); border-radius: 1.5rem; padding: 1rem; margin-top: 1rem; text-align: center;">
+        <span id="estimateLabel">📊 المتابعون المتوقعون هذا الأسبوع:</span>
+        <span class="total-number" id="weeklyEstimate" style="font-size: 2rem; font-weight:800; color:#ffb347;">0</span>
+        <span id="followerUnit">متابع حقيقي</span>
+        <div style="font-size:0.7rem;" id="estimateNote">* بناءً على تفعيلك للمهام أعلاه + تفاعلك الحقيقي</div>
+      </div>
     </div>
   </div>
-  <footer id="footerText"><i class="fab fa-instagram"></i> InstaGrow • Organic strategies only • Not affiliated with Instagram • Results vary based on effort & quality.</footer>
+  
+  <div class="glass">
+    <h2><i class="fas fa-fire"></i> <span id="reelTitle">أفكار ريلز فيروسية (مضمونة الوصول)</span></h2>
+    <div id="reelIdeasContainer" style="display: flex; flex-wrap: wrap; gap: 12px;"></div>
+  </div>
+  
+  <footer id="footerText"><i class="fab fa-instagram"></i> InstaMagnet – أداة للنمو العضوي الحقيقي. النتائج تعتمد على استمراريتك. لا نضمن متابعين وهميين، نضمن استراتيجيات مجربة.</footer>
 </div>
 
 <script>
-  // ---------- TRANSLATIONS ----------
-  const translations = {
-    en: {
-      brand: "InstaGrow",
-      heroTitle: "🚀 turn engagement into <span style=\"color:#f77737;\">real followers</span>",
-      heroSub: "Data‑inspired strategies + interactive tools to boost your Instagram presence — 100% organic, no bots.",
-      growthTitle: "Follower Growth Estimator",
-      growthDesc: "✔️ Select actions you'll commit weekly — see estimated new followers 🔽",
-      totalLabel: "📈 estimated weekly growth:",
-      followersUnit: "new followers",
-      estDisclaimer: "*estimates based on industry benchmarks & engagement rates",
-      checklistTitle: "Daily Success Checklist",
-      checklistSub: "Track your progress & stay consistent",
-      tasksWord: "tasks",
-      hashtagTitle: "Smart Hashtag Lab",
-      hashtagDesc: "Choose your niche & get high‑performing hashtags",
-      copyBtnText: "Copy all hashtags",
-      hashtagTip: "✨ Use 5–10 relevant hashtags per post for reach",
-      tipsTitle: "Growth Accelerators",
-      footer: "InstaGrow • Organic strategies only • Not affiliated with Instagram • Results vary based on effort & quality.",
-      nicheOptions: {
-        fitness: "💪 Fitness & Gym",
-        travel: "✈️ Travel & Adventure",
-        beauty: "💄 Beauty & Skincare",
-        tech: "📱 Tech & Gadgets",
-        food: "🍕 Food & Cooking",
-        art: "🎨 Art & Illustration"
-      },
-      growthActions: [
-        { id: "reels", label: "📱 Post 3–4 Reels per week", gain: 55 },
-        { id: "feed", label: "🖼️ Share 5 high‑quality feed posts", gain: 38 },
-        { id: "engage", label: "💬 Engage 30 min/day (comments & DMs)", gain: 45 },
-        { id: "collab", label: "🤝 Collaborate with 1 creator / week", gain: 70 },
-        { id: "hashtag", label: "🏷️ Use optimized hashtag sets", gain: 28 },
-        { id: "stories", label: "📖 Post interactive stories daily", gain: 22 },
-        { id: "carousel", label: "🔄 Post 2 carousel posts (high save-rate)", gain: 32 }
+  // ------------------- البيانات ثنائية اللغة -------------------
+  const langData = {
+    ar: {
+      mainTagline: "🧲 اجذب متابعين حقيقيين يومياً",
+      mainDesc: "ليس مجرد نصائح – أدوات تفاعلية تترجم أفعالك إلى متابعين مهتمين بمحتواك.",
+      dailyTitle: "مهام تجلب متابعين حقيقيين",
+      engageTitle: "تعليقات تجذب المتابعين",
+      engageDesc: "انسخ نص تعليق ذكي وضعه على منشورات حسابات في مجالك",
+      copyBtnText: "انسخ التعليق",
+      newCommentText: "تعليق جديد",
+      realFollowersTip: "💡 كل تعليق حقيقي يزيد ظهورك → متابعين فعليين",
+      hashTitle: "هاشتاغات تجيب مشاهديين",
+      copyHashText: "نسخ الهاشتاغات",
+      growthTitle: "تقدير المتابعين الواقعيين",
+      estimateLabel: "📊 المتابعين المتوقعين هذا الأسبوع:",
+      followerUnit: "متابع حقيقي",
+      estimateNote: "* بناءً على تفعيلك للمهام أعلاه + تفاعلك الحقيقي",
+      reelTitle: "أفكار ريلز فيروسية (مضمونة الوصول)",
+      footer: "InstaMagnet – أداة للنمو العضوي الحقيقي. النتائج تعتمد على استمراريتك.",
+      realTasks: [
+        "👍 تفاعل مع 10 منشورات لحسابات في مجالك (إعجاب + تعليق حقيقي)",
+        "💬 رد على 5 ستوريز لأشخاص قد يصبحون متابعين",
+        "✍️ انشر قصة (ستوري) بها سؤال أو رأي لتحفيز الردود",
+        "🎥 انشر ريلز واحد (أقل من 20 ثانية) بمؤثر صوتي رائج",
+        "📢 شجع متابعاً على وضع علامة @ لصديق في منشورك"
       ],
-      dailyTasks: [
-        "🎥 Publish 1 Reel (short, trendy audio)",
-        "❤️ Engage with 15+ followers & non-followers in your niche",
-        "📸 Post 1 feed photo or carousel (value-driven)",
-        "📊 Check Instagram insights & adapt next content",
-        "💬 Reply to every story mention & 5 DMs"
+      commitments: [
+        { id: "dailyEngage", label: "أقوم بـ 15 تفاعل حقيقي يومياً (تعليق/رسالة)", gain: 45 },
+        { id: "postReel", label: "أنشر 3 ريلز أسبوعياً", gain: 70 },
+        { id: "hashtagStrategy", label: "أستخدم الهاشتاغات المُقترحة", gain: 30 },
+        { id: "collab", label: "أتعاون مع حساب آخر (تاغ/remix)", gain: 90 }
       ],
-      tipsList: [
-        { icon: "fas fa-video", title: "Reels supremacy", text: "Short, engaging Reels get 2x more reach → convert viewers to followers." },
-        { icon: "fas fa-clock", title: "Post when active", text: "Analyze insights; post 1h before peak activity. 7–9pm works for most." },
-        { icon: "fas fa-comments", title: "Community first", text: "Reply to every comment + DM within 24h → boosts loyalty & algorithm love." },
-        { icon: "fas fa-chart-line", title: "Content pillar mix", text: "Educational, entertaining & relatable posts hook wider audiences." }
+      reelIdeas: [
+        "🎬 '3 أشياء أتمنى لو عرفتها قبل سنة' (توعوي)",
+        "🎬 تحدي 'هذا أو ذاك' مع فلتر مشهور",
+        "🎬 ريلز سريع لنتيجة تحول (قبل وبعد)",
+        "🎬 نصيحة تحت 15 ثانية تخلّي المتابع يعلق 'مفيد'"
+      ],
+      commentTemplates: [
+        "🔥 هذا المحتوى رهيب! أنت تلهمني فعلاً، شكراً لك 🙏",
+        "❤️ أوافقك الرأي 100%، لاحظت نفس الشيء. استمر بهذه الطاقة!",
+        "🎯 نقطة رائعة، لم أفكر بها بهذا الشكل. متابع جديد لك 👏",
+        "✨ هذا الريلز غير نظرتي للموضوع، شكراً للمشاركة القيمة!"
       ]
     },
-    ar: {
-      brand: "إنستا Grow",
-      heroTitle: "🚀 حوّل التفاعل إلى <span style=\"color:#f77737;\">متابعين حقيقيين</span>",
-      heroSub: "استراتيجيات مستوحاة من البيانات + أدوات تفاعلية لتعزيز حضورك على إنستغرام — ١٠٠٪ عضوي، بدون بوتات.",
-      growthTitle: "مقدّر نمو المتابعين",
-      growthDesc: "✔️ اختر الإجراءات التي ستلتزم بها أسبوعيًا — شاهد تقدير المتابعين الجدد 🔽",
-      totalLabel: "📈 النمو الأسبوعي المتوقع:",
-      followersUnit: "متابع جديد",
-      estDisclaimer: "*تقديرات تستند إلى معايير الصناعة ومعدلات التفاعل",
-      checklistTitle: "قائمة النجاح اليومية",
-      checklistSub: "تتبع تقدّمك وحافظ على الاستمرارية",
-      tasksWord: "مهمة",
-      hashtagTitle: "مختبر الهاشتاغات الذكي",
-      hashtagDesc: "اختر مجالك واحصل على هاشتاغات عالية الأداء",
-      copyBtnText: "نسخ كل الهاشتاغات",
-      hashtagTip: "✨ استخدم ٥–١٠ هاشتاغات مناسبة لكل منشور للوصول",
-      tipsTitle: "مسرّعات النمو",
-      footer: "إنستا Grow • استراتيجيات عضوية فقط • غير تابع لإنستغرام • النتائج تعتمد على الجهد والجودة.",
-      nicheOptions: {
-        fitness: "💪 لياقة وصالات رياضية",
-        travel: "✈️ سفر ومغامرات",
-        beauty: "💄 جمال وعناية بالبشرة",
-        tech: "📱 تقنية وأدوات ذكية",
-        food: "🍕 طعام وطبخ",
-        art: "🎨 فن ورسم"
-      },
-      growthActions: [
-        { id: "reels", label: "📱 نشر ٣-٤ ريلز أسبوعيًا", gain: 55 },
-        { id: "feed", label: "🖼️ مشاركة ٥ منشورات عالية الجودة", gain: 38 },
-        { id: "engage", label: "💬 تفاعل ٣٠ دقيقة/يوم (تعليقات ورسائل)", gain: 45 },
-        { id: "collab", label: "🤝 تعاون مع صانع محتوى واحد أسبوعيًا", gain: 70 },
-        { id: "hashtag", label: "🏷️ استخدم مجموعات هاشتاغ محسّنة", gain: 28 },
-        { id: "stories", label: "📖 انشر ستوريات تفاعلية يوميًا", gain: 22 },
-        { id: "carousel", label: "🔄 انشر منشورين كاروسيل (نسبة حفظ عالية)", gain: 32 }
+    en: {
+      mainTagline: "🧲 Attract REAL followers daily",
+      mainDesc: "Not just tips – interactive tools that turn your actions into engaged followers.",
+      dailyTitle: "Real Follower Tasks",
+      engageTitle: "Magnetic Comments",
+      engageDesc: "Copy smart comments & post on niche accounts",
+      copyBtnText: "Copy Comment",
+      newCommentText: "New Comment",
+      realFollowersTip: "💡 Every real comment boosts your visibility → genuine followers",
+      hashTitle: "Reach-Boosting Hashtags",
+      copyHashText: "Copy Hashtags",
+      growthTitle: "Realistic Follower Estimate",
+      estimateLabel: "📊 Expected weekly growth:",
+      followerUnit: "real followers",
+      estimateNote: "* based on completing tasks above + genuine interaction",
+      reelTitle: "Viral Reel Ideas (proven reach)",
+      footer: "InstaMagnet – Organic growth tool. Results depend on consistency. No fake followers, only real strategies.",
+      realTasks: [
+        "👍 Engage with 10 posts in your niche (like + real comment)",
+        "💬 Reply to 5 stories from potential followers",
+        "✍️ Post a story with a question or poll to spark replies",
+        "🎥 Publish 1 Reel (under 20 sec) with trending audio",
+        "📢 Ask a follower to tag a friend in your post"
       ],
-      dailyTasks: [
-        "🎥 انشر ريلز واحد (صوت قصير وعصري)",
-        "❤️ تفاعل مع ١٥+ من المتابعين وغير المتابعين في مجالك",
-        "📸 انشر صورة أو كاروسيل (محتوى ذو قيمة)",
-        "📊 تفقّد إحصائيات إنستغرام وعدّل محتواك التالي",
-        "💬 رد على كل إشارة في الستوري و ٥ رسائل خاصة"
+      commitments: [
+        { id: "dailyEngage", label: "I do 15 real interactions daily (comment/DM)", gain: 45 },
+        { id: "postReel", label: "I post 3 Reels per week", gain: 70 },
+        { id: "hashtagStrategy", label: "I use suggested hashtags", gain: 30 },
+        { id: "collab", label: "I collaborate with another account (tag/remix)", gain: 90 }
       ],
-      tipsList: [
-        { icon: "fas fa-video", title: "سيادة الريلز", text: "الريلز القصيرة والجذابة تحصل على وصول مضاعف → حوّل المشاهدين إلى متابعين." },
-        { icon: "fas fa-clock", title: "النشر في وقت النشاط", text: "حلل الإحصائيات وانشر قبل ساعة من ذروة النشاط. الساعة ٧-٩ مساءً مناسبة للأغلبية." },
-        { icon: "fas fa-comments", title: "المجتمع أولاً", text: "رد على كل تعليق ورسالة خلال ٢٤ ساعة → يعزز الولاء وإشارات الخوارزمية." },
-        { icon: "fas fa-chart-line", title: "مزيج الركائز المحتوى", text: "المحتوى التعليمي والترفيهي والمرتبط بالحياة اليومية يجذب جمهورًا أوسع." }
+      reelIdeas: [
+        "🎬 '3 things I wish I knew 1 year ago' (educational)",
+        "🎬 'This or That' challenge using a popular filter",
+        "🎬 Quick transformation before/after Reel",
+        "🎬 15-second tip that makes people comment 'helpful'"
+      ],
+      commentTemplates: [
+        "🔥 This content is fire! You truly inspire me, thank you 🙏",
+        "❤️ I agree 100%, noticed the same thing. Keep up the great energy!",
+        "🎯 Great point, never thought of it that way. New follower here 👏",
+        "✨ This Reel shifted my perspective, thanks for sharing valuable insight!"
       ]
     }
   };
-
-  let currentLang = 'en';
-
-  // Base data (will be overwritten by language)
-  let growthActionsList = [];
-  let dailyTasksList = [];
-  let tipsStructure = [];
-  let nicheOptionsMap = {};
-
-  const hashtagsDatabase = {
-    fitness: ["#fitnessmotivation", "#gymlife", "#workoutdaily", "#fitfam", "#bodybuilding", "#homeworkout", "#strongnotskinny", "#trainingday"],
-    travel: ["#wanderlust", "#travelgram", "#adventuretime", "#exploremore", "#naturelovers", "#roamtheplanet", "#beautifuldestinations", "#travellife"],
-    beauty: ["#skincareroutine", "#makeupinspo", "#glowup", "#beautytips", "#crueltyfree", "#selfcaredaily", "#cleanbeauty", "#lipsticklover"],
-    tech: ["#technews", "#gadgetlove", "#innovation", "#futuretech", "#codinglife", "#aiart", "#smartgadgets", "#techie"],
-    food: ["#foodielife", "#instayum", "#deliciousfood", "#homemadefood", "#foodgasm", "#easyrecipes", "#streetfood", "#healthyeating"],
-    art: ["#artdaily", "#illustrationnow", "#creativeprocess", "#artistsoninstagram", "#sketchbook", "#digitalart", "#watercolor", "#abstractart"]
+  
+  let currentLang = 'ar';
+  let realTasksList = [];
+  let commitmentsList = [];
+  let reelIdeas = [];
+  let commentTemplates = [];
+  let selectedNiche = "fitness";
+  
+  const hashtagsDB = {
+    fitness: ["#fitnessmotivation", "#gymlife", "#workoutdaily", "#fitfam", "#homeworkout", "#strong", "#trainingday"],
+    travel: ["#wanderlust", "#travelgram", "#adventuretime", "#exploremore", "#roamtheplanet", "#beautifuldestinations"],
+    beauty: ["#skincareroutine", "#makeupinspo", "#glowup", "#beautytips", "#cleanbeauty", "#selfcaredaily"],
+    tech: ["#technews", "#gadgetlove", "#innovation", "#codinglife", "#aiart", "#smartgadgets"],
+    food: ["#foodielife", "#instayum", "#deliciousfood", "#homemadefood", "#foodgasm", "#easyrecipes"],
+    art: ["#artdaily", "#illustrationnow", "#creativeprocess", "#artistsoninstagram", "#sketchbook", "#digitalart"]
   };
-
-  function loadLanguageData(lang) {
-    const t = translations[lang];
-    growthActionsList = t.growthActions.map(a => ({ ...a, label: a.label, gain: a.gain }));
-    dailyTasksList = t.dailyTasks.map(task => ({ text: task, completed: false }));
-    tipsStructure = t.tipsList;
-    nicheOptionsMap = t.nicheOptions;
-    // update static texts
-    document.getElementById("brandName").innerHTML = t.brand;
-    document.getElementById("heroTitle").innerHTML = t.heroTitle;
-    document.getElementById("heroSub").innerText = t.heroSub;
-    document.getElementById("growthTitle").innerText = t.growthTitle;
-    document.getElementById("growthDesc").innerText = t.growthDesc;
-    document.getElementById("totalLabel").innerHTML = t.totalLabel;
-    document.getElementById("followersUnit").innerText = t.followersUnit;
-    document.getElementById("estDisclaimer").innerText = t.estDisclaimer;
-    document.getElementById("checklistTitle").innerText = t.checklistTitle;
-    document.getElementById("checklistSub").innerText = t.checklistSub;
-    document.getElementById("tasksWord").innerText = t.tasksWord;
-    document.getElementById("hashtagTitle").innerText = t.hashtagTitle;
-    document.getElementById("hashtagDesc").innerText = t.hashtagDesc;
-    document.getElementById("copyBtnText").innerText = t.copyBtnText;
-    document.getElementById("hashtagTip").innerText = t.hashtagTip;
-    document.getElementById("tipsTitle").innerText = t.tipsTitle;
-    document.getElementById("footerText").innerHTML = t.footer;
+  
+  function loadLanguage(lang) {
+    currentLang = lang;
+    const data = langData[lang];
+    document.documentElement.lang = lang === 'ar' ? 'ar' : 'en';
+    document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+      if(btn.dataset.lang === lang) btn.classList.add("active");
+      else btn.classList.remove("active");
+    });
+    document.getElementById("mainTagline").innerHTML = data.mainTagline;
+    document.getElementById("mainDesc").innerText = data.mainDesc;
+    document.getElementById("dailyTitle").innerText = data.dailyTitle;
+    document.getElementById("engageTitle").innerText = data.engageTitle;
+    document.getElementById("engageDesc").innerText = data.engageDesc;
+    document.getElementById("copyBtnText").innerText = data.copyBtnText;
+    document.getElementById("newCommentText").innerText = data.newCommentText;
+    document.getElementById("realFollowersTip").innerHTML = data.realFollowersTip;
+    document.getElementById("hashTitle").innerText = data.hashTitle;
+    document.getElementById("copyHashText").innerText = data.copyHashText;
+    document.getElementById("growthTitle").innerText = data.growthTitle;
+    document.getElementById("estimateLabel").innerHTML = data.estimateLabel;
+    document.getElementById("followerUnit").innerText = data.followerUnit;
+    document.getElementById("estimateNote").innerText = data.estimateNote;
+    document.getElementById("reelTitle").innerHTML = data.reelTitle;
+    document.getElementById("footerText").innerHTML = data.footer;
+    
+    realTasksList = data.realTasks.map((text, idx) => ({ text, completed: false, id: idx }));
+    commitmentsList = data.commitments.map(c => ({ ...c, checked: false }));
+    reelIdeas = data.reelIdeas;
+    commentTemplates = data.commentTemplates;
+    
+    renderRealTasks();
+    renderCommitments();
+    renderReelIdeas();
+    setRandomComment();
+    updateGrowthEstimate();
+    populateNicheDropdown();
+    renderHashtags();
   }
-
-  function rebuildNicheDropdown() {
-    const select = document.getElementById("nicheSelect");
-    if(!select) return;
-    select.innerHTML = "";
-    for (const [key, label] of Object.entries(nicheOptionsMap)) {
-      const option = document.createElement("option");
-      option.value = key;
-      option.textContent = label;
-      select.appendChild(option);
-    }
-  }
-
-  function renderGrowthCalculator() {
-    const container = document.getElementById("actionsContainer");
+  
+  function renderRealTasks() {
+    const container = document.getElementById("realTasksList");
     if(!container) return;
     container.innerHTML = "";
-    growthActionsList.forEach((action, idx) => {
+    realTasksList.forEach((task, idx) => {
       const div = document.createElement("div");
-      div.className = "action-item";
-      const isChecked = (localStorage.getItem(`action_${action.id}`) === 'true') || (action.id === 'engage' && currentLang === 'en' && !localStorage.getItem(`action_${action.id}`) ) || (action.id === 'engage' && currentLang === 'ar' && !localStorage.getItem(`action_${action.id}`));
-      const checkedAttr = isChecked ? 'checked' : '';
+      div.className = "action-card";
       div.innerHTML = `
-        <input type="checkbox" id="chk_${action.id}" data-gain="${action.gain}" ${checkedAttr}>
-        <span class="action-label">${action.label}</span>
-        <span class="gain-badge">+${action.gain}/wk</span>
+        <label style="display: flex; align-items: center; gap: 12px; cursor: pointer;">
+          <input type="checkbox" data-task-idx="${idx}" ${task.completed ? 'checked' : ''} style="width: 20px; height: 20px;">
+          <span>${task.text}</span>
+        </label>
       `;
       container.appendChild(div);
     });
-    document.querySelectorAll("#actionsContainer input[type=checkbox]").forEach(cb => {
+    document.querySelectorAll("#realTasksList input").forEach(cb => {
       cb.addEventListener("change", (e) => {
-        const id = cb.id.replace("chk_", "");
-        localStorage.setItem(`action_${id}`, cb.checked);
-        updateTotalGrowth();
+        const idx = parseInt(cb.dataset.taskIdx);
+        realTasksList[idx].completed = cb.checked;
+        updateTaskProgress();
+        updateGrowthEstimate();
+        saveTasksState();
       });
     });
-    updateTotalGrowth();
+    updateTaskProgress();
+    loadTasksState();
   }
-
-  function updateTotalGrowth() {
-    let totalGain = 20; // baseline
-    document.querySelectorAll("#actionsContainer input[type=checkbox]:checked").forEach(cb => {
-      const gain = parseInt(cb.getAttribute("data-gain"));
-      if(!isNaN(gain)) totalGain += gain;
-    });
-    document.getElementById("totalFollowersCount").innerText = totalGain;
+  
+  function updateTaskProgress() {
+    const total = realTasksList.length;
+    const done = realTasksList.filter(t => t.completed).length;
+    const percent = (done/total)*100;
+    document.getElementById("dailyProgressFill").style.width = `${percent}%`;
+    document.getElementById("doneCount").innerText = done;
+    document.getElementById("totalCount").innerText = total;
+    const msg = currentLang === 'ar' ? (done === total ? "🚀 أنت جاهز لانفجار متابعين!" : "✨ استمر، كل مهمة = متابعين حقيقيين") : (done === total ? "🚀 Ready for follower growth!" : "✨ Keep going, each task = real followers");
+    document.getElementById("dailyMsg").innerText = msg;
   }
-
-  function renderChecklist() {
-    const container = document.getElementById("checklistContainer");
-    if(!container) return;
-    container.innerHTML = "";
-    dailyTasksList.forEach((task, idx) => {
-      const div = document.createElement("div");
-      div.className = "checklist-item";
-      div.innerHTML = `
-        <input type="checkbox" data-taskidx="${idx}" ${task.completed ? 'checked' : ''}>
-        <span style="flex:1;">${task.text}</span>
-      `;
-      container.appendChild(div);
-    });
-    document.querySelectorAll("#checklistContainer input[type=checkbox]").forEach(cb => {
-      cb.addEventListener("change", (e) => {
-        const idx = parseInt(cb.getAttribute("data-taskidx"));
-        if(!isNaN(idx)) {
-          dailyTasksList[idx].completed = cb.checked;
-          updateChecklistProgress();
-          saveChecklistState();
-        }
-      });
-    });
-    updateChecklistProgress();
+  
+  function saveTasksState() {
+    const state = realTasksList.map(t => t.completed);
+    localStorage.setItem("instaMagnet_tasks", JSON.stringify(state));
   }
-
-  function updateChecklistProgress() {
-    const total = dailyTasksList.length;
-    const completed = dailyTasksList.filter(t => t.completed).length;
-    const percent = (completed / total) * 100;
-    const fill = document.getElementById("checklistProgressFill");
-    if(fill) fill.style.width = `${percent}%`;
-    document.getElementById("completedCount").innerText = completed;
-    document.getElementById("totalTasks").innerText = total;
-    const msgMap = { en: ["✨ keep going!", "🌟 Good rhythm!", "🔥 Perfect consistency!"], ar: ["✨ استمر!", "🌟 إيقاع جيد!", "🔥 اتساق مثالي!"] };
-    const msgs = msgMap[currentLang];
-    let msg = msgs[0];
-    if(completed === total) msg = msgs[2];
-    else if(completed >= 3) msg = msgs[1];
-    document.getElementById("motivationMsg").innerText = msg;
-  }
-
-  function saveChecklistState() {
-    const state = dailyTasksList.map(t => t.completed);
-    localStorage.setItem("instagrow_checklist", JSON.stringify(state));
-  }
-
-  function loadChecklistState() {
-    const saved = localStorage.getItem("instagrow_checklist");
+  function loadTasksState() {
+    const saved = localStorage.getItem("instaMagnet_tasks");
     if(saved) {
       try {
-        const parsed = JSON.parse(saved);
-        if(Array.isArray(parsed) && parsed.length === dailyTasksList.length) {
-          dailyTasksList.forEach((task, idx) => task.completed = parsed[idx]);
+        const arr = JSON.parse(saved);
+        if(arr.length === realTasksList.length) {
+          realTasksList.forEach((t,i)=> t.completed = arr[i]);
+          renderRealTasks();
         }
       } catch(e) {}
     }
   }
-
-  function renderTips() {
-    const container = document.getElementById("tipsListContainer");
+  
+  function renderCommitments() {
+    const container = document.getElementById("commitActions");
     if(!container) return;
     container.innerHTML = "";
-    tipsStructure.forEach(tip => {
+    commitmentsList.forEach((com, idx) => {
       const div = document.createElement("div");
-      div.className = "tip-item";
+      div.className = "action-card";
       div.innerHTML = `
-        <div class="tip-icon"><i class="${tip.icon}"></i></div>
-        <div class="tip-text"><strong>${tip.title}</strong><p>${tip.text}</p></div>
+        <label style="display:flex; align-items:center; gap:10px;">
+          <input type="checkbox" data-com-idx="${idx}" ${com.checked ? 'checked' : ''}> 
+          <span>${com.label}</span> 
+          <span style="margin-right:auto; background:#f7773733; padding:2px 8px; border-radius:30px;">+${com.gain}</span>
+        </label>
       `;
       container.appendChild(div);
     });
-  }
-
-  function renderHashtagsForNiche(niche) {
-    const tags = hashtagsDatabase[niche] || hashtagsDatabase.fitness;
-    const container = document.getElementById("hashtagDisplay");
-    if(container) {
-      container.innerHTML = "";
-      tags.forEach(tag => {
-        const span = document.createElement("span");
-        span.className = "hashtag";
-        span.innerText = tag;
-        container.appendChild(span);
+    document.querySelectorAll("#commitActions input").forEach(cb => {
+      cb.addEventListener("change", (e) => {
+        const idx = parseInt(cb.dataset.comIdx);
+        commitmentsList[idx].checked = cb.checked;
+        updateGrowthEstimate();
+        localStorage.setItem("instaMagnet_commits", JSON.stringify(commitmentsList.map(c=>c.checked)));
       });
+    });
+    const savedCommits = localStorage.getItem("instaMagnet_commits");
+    if(savedCommits) {
+      try {
+        const arr = JSON.parse(savedCommits);
+        if(arr.length === commitmentsList.length) {
+          commitmentsList.forEach((c,i)=> c.checked = arr[i]);
+          renderCommitments();
+        }
+      } catch(e) {}
     }
+    updateGrowthEstimate();
   }
-
-  function getAllCurrentHashtags() {
+  
+  function updateGrowthEstimate() {
+    let total = 15; // baseline
+    commitmentsList.forEach(c => { if(c.checked) total += c.gain; });
+    const tasksDone = realTasksList.filter(t => t.completed).length;
+    const taskBonus = Math.floor(tasksDone * 8);
+    total += taskBonus;
+    document.getElementById("weeklyEstimate").innerText = total;
+  }
+  
+  function renderReelIdeas() {
+    const container = document.getElementById("reelIdeasContainer");
+    if(!container) return;
+    container.innerHTML = "";
+    reelIdeas.forEach(idea => {
+      const badge = document.createElement("div");
+      badge.className = "hashtag";
+      badge.innerHTML = `<i class="fas fa-play"></i> ${idea}`;
+      container.appendChild(badge);
+    });
+  }
+  
+  function setRandomComment() {
+    const randomIndex = Math.floor(Math.random() * commentTemplates.length);
+    document.getElementById("commentSuggestion").value = commentTemplates[randomIndex];
+  }
+  
+  function populateNicheDropdown() {
     const select = document.getElementById("nicheSelect");
-    const niche = select ? select.value : "fitness";
-    return hashtagsDatabase[niche] || hashtagsDatabase.fitness;
-  }
-
-  async function copyHashtags() {
-    const tags = getAllCurrentHashtags();
-    const text = tags.join(" ");
-    await navigator.clipboard.writeText(text);
-    const btn = document.getElementById("copyHashtagsBtn");
-    const original = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-check"></i> ' + (currentLang === 'ar' ? 'تم النسخ!' : 'Copied!');
-    setTimeout(() => btn.innerHTML = original, 1500);
-  }
-
-  function setLanguage(lang) {
-    currentLang = lang;
-    document.documentElement.lang = lang === 'ar' ? 'ar' : 'en';
-    document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    localStorage.setItem("insta_lang", lang);
-    // update active button
-    document.querySelectorAll(".lang-btn").forEach(btn => {
-      if(btn.getAttribute("data-lang") === lang) btn.classList.add("active");
-      else btn.classList.remove("active");
+    select.innerHTML = "";
+    const niches = Object.keys(hashtagsDB);
+    const names = { fitness:"Fitness", travel:"Travel", beauty:"Beauty", tech:"Tech", food:"Food", art:"Art" };
+    niches.forEach(n => {
+      const opt = document.createElement("option");
+      opt.value = n;
+      opt.innerText = currentLang === 'ar' ? (n==="fitness"?"لياقة":n==="travel"?"سفر":n==="beauty"?"جمال":n==="tech"?"تقنية":n==="food"?"طعام":"فن") : names[n];
+      select.appendChild(opt);
     });
-    loadLanguageData(lang);
-    rebuildNicheDropdown();
-    // reinitialize data structures with new language
-    loadLanguageData(lang);
-    // important: rebuild dailyTasksList fresh from translations, keeping completed state? we preserve but map carefully.
-    const oldCompleted = dailyTasksList.map(t => t.completed);
-    const newTasks = translations[lang].dailyTasks.map((text, idx) => ({ text, completed: oldCompleted[idx] || false }));
-    dailyTasksList.length = 0;
-    dailyTasksList.push(...newTasks);
-    // growth actions
-    const newActions = translations[lang].growthActions.map(a => ({ ...a }));
-    growthActionsList.length = 0;
-    growthActionsList.push(...newActions);
-    tipsStructure = translations[lang].tipsList;
-    nicheOptionsMap = translations[lang].nicheOptions;
-    // re-render all dynamic components
-    renderGrowthCalculator();
-    renderChecklist();
-    renderTips();
-    const currentNiche = document.getElementById("nicheSelect")?.value || "fitness";
-    renderHashtagsForNiche(currentNiche);
-    document.getElementById("nicheSelect").addEventListener("change", (e) => renderHashtagsForNiche(e.target.value));
-    document.getElementById("copyHashtagsBtn").onclick = copyHashtags;
-    updateTotalGrowth();
+    select.value = selectedNiche;
+    select.onchange = (e) => { selectedNiche = e.target.value; renderHashtags(); };
   }
-
-  function init() {
-    const savedLang = localStorage.getItem("insta_lang");
-    const preferred = (savedLang === 'ar' || savedLang === 'en') ? savedLang : 'en';
-    // initial data
-    loadLanguageData(preferred);
-    rebuildNicheDropdown();
-    growthActionsList = translations[preferred].growthActions.map(a => ({ ...a }));
-    dailyTasksList = translations[preferred].dailyTasks.map(text => ({ text, completed: false }));
-    tipsStructure = translations[preferred].tipsList;
-    nicheOptionsMap = translations[preferred].nicheOptions;
-    loadChecklistState();
-    renderGrowthCalculator();
-    renderChecklist();
-    renderTips();
-    const nicheSelect = document.getElementById("nicheSelect");
-    if(nicheSelect) {
-      renderHashtagsForNiche(nicheSelect.value);
-      nicheSelect.addEventListener("change", (e) => renderHashtagsForNiche(e.target.value));
-    }
-    document.getElementById("copyHashtagsBtn").onclick = copyHashtags;
-    document.querySelectorAll(".lang-btn").forEach(btn => {
-      btn.addEventListener("click", () => setLanguage(btn.getAttribute("data-lang")));
-    });
-    setLanguage(preferred); // final sync
+  
+  function renderHashtags() {
+    const tags = hashtagsDB[selectedNiche];
+    const container = document.getElementById("hashtagArea");
+    container.innerHTML = "";
+    tags.forEach(t => { const span = document.createElement("span"); span.className="hashtag"; span.innerText = t; container.appendChild(span); });
   }
-  init();
+  
+  document.getElementById("newCommentBtn")?.addEventListener("click", setRandomComment);
+  document.getElementById("copyCommentBtn")?.addEventListener("click", () => {
+    const text = document.getElementById("commentSuggestion").value;
+    navigator.clipboard.writeText(text);
+    alert(currentLang === 'ar' ? "✅ تم نسخ التعليق! ألصقه الآن تحت منشور حساب حقيقي" : "✅ Comment copied! Paste under a real post");
+  });
+  document.getElementById("copyHashtagsBtn")?.addEventListener("click", () => {
+    const tags = hashtagsDB[selectedNiche];
+    navigator.clipboard.writeText(tags.join(" "));
+    alert(currentLang === 'ar' ? "تم نسخ الهاشتاغات" : "Hashtags copied");
+  });
+  
+  document.querySelectorAll(".lang-btn").forEach(btn => {
+    btn.addEventListener("click", () => { loadLanguage(btn.dataset.lang); });
+  });
+  
+  loadLanguage('ar');
 </script>
 </body>
 </html>
